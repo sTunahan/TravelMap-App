@@ -1,0 +1,43 @@
+
+Bu projece Kullanılan Teknolojıler: CoreData , MapKit , Kullanıcıyı Navigasyona gönlendirip yol tarifi alma,
+Eksiklikler :  kayıt edılen yerın DB den silinmesi olayı,Klavyenin kapanması olayı , save buttonunu bir daha göstermiyelim gibi bazı şeyler yapılmadı . Bir önceki artBookApp uygulamasında bunlar mevcut.
+
+Bu uygulamada  bir kişi seyahat ettiğinde beğendiği yeri veritabanında saklayıp daha sonrasında bulunduğu yerden kayıt etmiş olduğu yere yol tarifi sunma uygulamasıdır.Kullanıcı yeni bir yeri kayıt etmek istediğinde kayıt edecegı yere geleip 3 sn ekrana basılı tutunca  kırmızı bir tutamaç belirir.Böylede Üstüne ! işaretine basınca bize yol tarifini sunar.
+
+
+Mapkit kullanabilmek için "import MapKit"  yapılması gerekmektedir.daha sonra  "mapView.delegate = self"   diyerek kullanabılıyoruz.
+
+Kullanıcının Konumunu almak için:MapKit ile olmuyor baska bir kütüphane kullanıyoruz. "import CoreLocation"  kütüphanesi kullanılır.Bu kullanılırken kullanıcıdan izin isteriz ne zaman uygulama kullanıcıyı takip etsin süreklimi yoksa uygulamayı kullanırken mi  ayrıca birde konumun netliğini belirtmemiz gerekiyor , tam konummu yoksa biraz sapma olabilirmi diye belirtmemiz gerekiyor.Kullanıcıdan Izın ıstıyecegımız ıcın Kullanıcıya Information  bildirisi ekranı cıkartmamız gerekıyor Bunun için Sol tarafta INFO klasorune gıdıp ekleme yapmamız gerekıyor. Bu eklenecek olan  ismi PRİVACY Location when ın user.. secıp yanına acıklama yapıyoruz.
+
+Pinleme ( Kullanıcı yerini belirtmesi için cıkan kırmızı işaret) : Kullanıcı bır yerı begenıp orayı kayıt etmek ısterse ustune 3 sn tıklayıp orayı belirliyecek.Bunu yine Ekranın Algılaması yontemı olan "gestureRecognizer" ile yaparız.Bunu Yaparken ilk önce Basılan yeri algılarız , daha sonra bu algılanan yerın koordınatlarını alırız. Daha sonra bu Koordınata bir pin yerleştirmek istediğimiz için "annotation" oluşturulur.
+
+
+Pinlemede Gösterilecek olan başlık ve Açıklama kısmı ıcın "textFormField" oluştururuz.
+
+Yerleri Kayıt Etme Adımı.CoreData Kullanılıyor.DB kısımında "Places" adında bir Entities oluşturduk ve tablonun özelliklerini verdik.SAVE button içindeki kayıt etme işlemlerini yaparız.
+
+Artık kayıt edilen veriyi Çekme işlemi yapacağız.Bunun için tableView kullanacağız.Bu tableView Home page olacak,Verileri "getData()" methodu kullanarak alırız. ve tableview da gösteririz.
+
+
+Birden fazla ViewController yapmaktansa Koşula göre Olan ViewControllerı tasarımlarız.addButtondan diğer sayfaya gidiyorsak boş yollamamız lazım Eğer TableViewCell den gidiyorsak dolu yollamamız gerekiyor.Ekleme tuşuna basılırsa o ekrana gider Eger Kayıtlı olan bir konumu açmak istiyorsak burada birden fazla if koşulu oluştururuz "ViewController" kısmında. DB'den alınan veriler Pindeki özelliklere atanarak kayırlı olan konumu gösterir.
+
+
+
+Kayıtlı Olan yerleri gösterirken yapılması gereken ince ayarlar Mevcut.İnce Ayar Kullanıcı Kayıt ettiği alandan başka yere gitti ve O kayıt ettiği alana tekrardan gitmek istiyor Yani "YOL TARİFİ" İNCE AYARI.
+
+
+
+UYGULAMAYA yeni bir yer ekledıgımızde uygulamayı yenıden kapatıp acmamız gerekıyor bunun ıcın yapılacak olan adım... SaveButton da ıslemlerımız bıtınca gerı gelme olayını kodlarız.Bunun için tableview'ın oldugu viewController da viewWillAppear methodu cagırılır.
+
+
+Navigasyona Yönlendirebilmek için PİN'e !BUTTON 'u koyacağız. Buna tıklayınca kullanıcıyı Navigasyona yönlendireceğiz. ( Video 123 ) Line 158 de bulunan method ile özelleştirmemizi tamamladık şimdi  "annotation" da çıkan  buttona basıldıgında navigasyona yönlendirme adımını gerçekleştireceğiz.
+
+Navigastonu acabılmek ıcın Buttona basıldıgını anlamak ıcın bir Hazır method kullanıyoruz.(Line 190)
+navigasyonu acabılmemız ıcın bızım bır "mapItem" nesnesine ihtiyacımız var.Daha sonra bu mapItem ı hangı modda(araba,yayan) açacagımızı belirttikten sonra navigasyonu açabılıyoruz ancak bizim "mapItem" ı oluşturabilmek için bizim  bir "Placemark" denilen bir objeye ihtiyacımız var.Bu objeyide "reverseGeocodeLocation()" denilen bir method ile alıyoruz.
+
+
+
+
+
+
+
